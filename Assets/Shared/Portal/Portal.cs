@@ -6,20 +6,27 @@ public class Portal : MonoBehaviour
 {
 	public Transform portalCamera;
 	public Transform linkedPortal;
-	private float cameraDistance;
 
 	// Use this for initialization
 	void Start ()
 	{
-		cameraDistance = portalCamera.localPosition.magnitude;
-		print(cameraDistance);
+
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		var dir = (Camera.main.transform.position - linkedPortal.position).normalized;
-		portalCamera.localPosition = dir * cameraDistance;
-		portalCamera.LookAt(transform);
+		var playerCamera = Camera.main.transform;
+		var localOffset = linkedPortal.InverseTransformPoint(playerCamera.position);
+		portalCamera.localPosition = localOffset;
+
+		var localDir = linkedPortal.InverseTransformDirection(playerCamera.forward);
+		portalCamera.forward = transform.TransformDirection(localDir);
 	}
+}
+
+public class TextureSetup
+{
+	public Material material;
+	public Camera camera;
 }
