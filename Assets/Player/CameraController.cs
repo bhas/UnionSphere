@@ -35,6 +35,4 @@ public class CameraController : MonoBehaviour
 	{
 		rotationAngle -= rotationSpeed;
 	}
-
-	
 }
